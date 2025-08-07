@@ -48,18 +48,18 @@ public class Scrabble {
     public int score(){
         if(word.length() == 0)
             return 0;
-        return wordMultiplier(1, word);
+        return wordMultiplier(word);
     }
 
-    public int wordMultiplier(int multiplier, String theWord){
+    public int wordMultiplier(String theWord){
         if (theWord.charAt(0) == '{' &&  theWord.endsWith("}") && theWord.charAt(2) != '}')
-            return wordMultiplier(2 * multiplier, (String) theWord.subSequence(1, theWord.length()-1));
+            return 2 * wordMultiplier((String) theWord.subSequence(1, theWord.length()-1));
         else if (theWord.charAt(0) == '[' &&  theWord.endsWith("]") && theWord.charAt(2) != ']')
-            return wordMultiplier(3 * multiplier, (String) theWord.subSequence(1, theWord.length()-1));
-        else return multiplyWord(multiplier, theWord);
+            return 3 * wordMultiplier((String) theWord.subSequence(1, theWord.length()-1));
+        else return scoreLetters(theWord);
     }
 
-    private int multiplyWord(int multiplier, String theWord){
+    private int scoreLetters(String theWord){
         int score=0;
         for (int i = 0; i < theWord.length(); i++) {
             if (values.containsKey(theWord.charAt(i)))
@@ -84,7 +84,7 @@ public class Scrabble {
                 return 0;
             }
         }
-        return score * multiplier;
+        return score;
     }
 
 }
